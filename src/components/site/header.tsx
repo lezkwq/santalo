@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { whatsapp } from "@/lib/santalo";
+import logoAsset from "@/assets/logo-santalo.png.asset.json";
 
 const links = [
   { label: "Projetos", href: "#projetos" },
