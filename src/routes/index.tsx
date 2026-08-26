@@ -119,48 +119,77 @@ function Index() {
             <div className="mt-14 grid gap-4 md:mt-24 md:grid-cols-12 md:gap-6">
               <figure className="md:col-span-8">
                 <RevealImage
-                  src={photos.estar}
-                  alt="Sala de estar com painel de TV sob medida"
+                  src={photos.cozinhaIlha}
+                  alt="Cozinha sob medida com ilha integrada à mesa de jantar"
                   className="aspect-[4/5] md:aspect-[16/10]"
-                  position="60% 50%"
-                />
-                <figcaption className="label-tech mt-3 text-muted-foreground">Estar</figcaption>
-              </figure>
-              <figure className="md:col-span-4 md:pt-16">
-                <RevealImage
-                  src={photos.painel}
-                  alt="Painel de TV com revestimento claro em composição vertical"
-                  className="aspect-[3/4]"
-                  position="55% 45%"
-                />
-                <figcaption className="label-tech mt-3 text-muted-foreground">Detalhe</figcaption>
-              </figure>
-              <figure className="md:col-span-5">
-                <RevealImage
-                  src={photos.dormitorio}
-                  alt="Dormitório com cabeceira estofada e penteadeira sob medida"
-                  className="aspect-[4/5] md:aspect-[4/3]"
-                  position="60% 50%"
-                />
-                <figcaption className="label-tech mt-3 text-muted-foreground">Dormitório</figcaption>
-              </figure>
-              <figure className="md:col-span-7 md:pt-20">
-                <RevealImage
-                  src={photos.cozinha}
-                  alt="Cozinha ampla com ilha e marcenaria em madeira"
-                  className="aspect-[4/5] md:aspect-[16/10]"
-                  position="70% 50%"
+                  position="50% 62%"
                 />
                 <figcaption className="label-tech mt-3 text-muted-foreground">Cozinha</figcaption>
               </figure>
-              <figure className="md:col-span-6 md:col-start-4">
+              <figure className="md:col-span-4 md:pt-16">
                 <RevealImage
-                  src={photos.comercial}
-                  alt="Studio comercial com bancadas e prateleiras sob medida"
-                  className="aspect-[4/3]"
-                  position="50% 50%"
+                  src={photos.lavabo}
+                  alt="Lavabo com bancada de mármore, espelho redondo e painel ripado"
+                  className="aspect-[3/4]"
+                  position="50% 32%"
                 />
-                <figcaption className="label-tech mt-3 text-muted-foreground">Comercial</figcaption>
+                <figcaption className="label-tech mt-3 text-muted-foreground">Lavabo</figcaption>
+              </figure>
+              <figure className="md:col-span-7">
+                <RevealImage
+                  src={photos.salaRipado}
+                  alt="Sala com painel ripado de madeira e mesas de apoio"
+                  className="aspect-[4/5] md:aspect-[16/10]"
+                  position="45% 58%"
+                />
+                <figcaption className="label-tech mt-3 text-muted-foreground">Estar</figcaption>
+              </figure>
+              <figure className="md:col-span-5 md:pt-20">
+                <RevealImage
+                  src={photos.penteadeira}
+                  alt="Dormitório com penteadeira, espelho iluminado e cabeceira estofada"
+                  className="aspect-[4/5]"
+                  position="52% 45%"
+                />
+                <figcaption className="label-tech mt-3 text-muted-foreground">Dormitório</figcaption>
+              </figure>
+              <figure className="md:col-span-4 md:col-start-2">
+                <RevealImage
+                  src={photos.painelJardim}
+                  alt="Painel de TV com jardim vertical e prateleira suspensa"
+                  className="aspect-[4/5]"
+                  position="42% 50%"
+                />
+                <figcaption className="label-tech mt-3 text-muted-foreground">Estar</figcaption>
+              </figure>
+              <figure className="md:col-span-5 md:pt-12">
+                <RevealImage
+                  src={photos.estar}
+                  alt="Sala de estar com painel de TV sob medida"
+                  className="aspect-[4/3]"
+                  position="60% 50%"
+                />
+                <figcaption className="label-tech mt-3 text-muted-foreground">Detalhe</figcaption>
+              </figure>
+              <figure className="md:col-span-7">
+                <RevealImage
+                  src={photos.cozinhaAzul}
+                  alt="Cozinha com armários em tom azul acinzentado e torre de fornos embutidos"
+                  className="aspect-[4/5] md:aspect-[16/10]"
+                  position="55% 62%"
+                />
+                <figcaption className="label-tech mt-3 text-muted-foreground">Cozinha</figcaption>
+              </figure>
+              <figure className="md:col-span-5 md:pt-16">
+                <RevealImage
+                  src={photos.jantarIntegrado}
+                  alt="Ambiente de jantar com banco em L estofado integrado à cozinha"
+                  className="aspect-[4/5] md:aspect-[4/3]"
+                  position="55% 60%"
+                />
+                <figcaption className="label-tech mt-3 text-muted-foreground">
+                  Ambiente integrado
+                </figcaption>
               </figure>
             </div>
 
@@ -202,6 +231,27 @@ function Index() {
               className="md:col-span-7 aspect-[4/5] md:aspect-[3/2]"
               position="55% 55%"
             />
+          </div>
+
+          <div className="mx-auto mt-12 grid w-full max-w-[1440px] gap-4 px-5 md:mt-20 md:grid-cols-12 md:gap-6 md:px-10">
+            <figure className="md:col-span-4 md:col-start-3">
+              <RevealImage
+                src={photos.detalhePenteadeira}
+                alt="Espelho iluminado e gaveta de joias aberta em penteadeira sob medida"
+                className="aspect-[4/3]"
+                position="50% 42%"
+              />
+              <figcaption className="label-tech mt-3 text-warmgray">Detalhe</figcaption>
+            </figure>
+            <figure className="md:col-span-3 md:col-start-8 md:pt-16">
+              <RevealImage
+                src={photos.detalheEstante}
+                alt="Estante metálica com iluminação interna e prateleiras sobre painel de mármore"
+                className="aspect-[3/4]"
+                position="50% 50%"
+              />
+              <figcaption className="label-tech mt-3 text-warmgray">Detalhe</figcaption>
+            </figure>
           </div>
         </section>
 
@@ -374,6 +424,28 @@ function Index() {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* FACHADA */}
+        <section className="w-full border-t border-border bg-offwhite py-20 md:py-28">
+          <div className="mx-auto grid w-full max-w-[1440px] gap-10 px-5 md:grid-cols-12 md:items-end md:gap-16 md:px-10">
+            <RevealImage
+              src={photos.fachada}
+              alt="Fachada da loja Santalo em Itajaí, com letreiro no vidro e jardim frontal"
+              className="md:col-span-8 aspect-[4/3] md:aspect-[16/9]"
+              position="50% 55%"
+            />
+            <Reveal delay={0.1} className="md:col-span-4">
+              <p className="label-tech text-muted-foreground">Onde a Santalo fica</p>
+              <address className="mt-6 not-italic leading-relaxed text-foreground">
+                Av. Marcos Aurélio Seara, 135
+                <br />
+                Santa Regina
+                <br />
+                Itajaí, SC
+              </address>
+            </Reveal>
           </div>
         </section>
 
