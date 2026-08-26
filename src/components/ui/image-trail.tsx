@@ -1,128 +1,152 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { Children, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useAnimationFrame } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
-type TrailItem = {
-  id: number;
-  src: string;
+import { useMouseVector } from "@/components/hooks/use-mouse-vector";
+
+interface ImageTrailProps {
+  children: ReactNode;
+  containerRef: RefObject<HTMLElement | null>;
+  newOnTop?: boolean;
+  rotationRange?: number;
+  /** minimum time in ms between two spawned items */
+  interval?: number;
+  /** minimum distance in px between two spawned items */
+  threshold?: number;
+  maxItems?: number;
+  /** how long each item stays before fading out (ms) */
+  lifetime?: number;
+}
+
+interface TrailItemData {
+  id: string;
   x: number;
   y: number;
-  width: number;
-  ratio: number;
-  rotate: number;
-};
+  rotation: number;
+  child: ReactNode;
+}
 
-type ImageTrailProps = {
-  images: string[];
-  /** minimum distance in px between two spawned images */
-  threshold?: number;
-  /** how long each image stays before fading out (ms) */
-  lifetime?: number;
-  className?: string;
-};
+function useTrailEnabled() {
+  const [enabled, setEnabled] = useState(false);
 
-const WIDTHS = [206, 158, 184, 132, 196, 148];
-const RATIOS = [0.72, 1.3, 0.78, 1.22, 0.68, 0.8];
-const ROTATIONS = [-8, 6, -6.5, 9, -7.5, 7];
+  useEffect(() => {
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setEnabled(fine.matches && !reduced.matches);
+    update();
+    fine.addEventListener("change", update);
+    reduced.addEventListener("change", update);
+    return () => {
+      fine.removeEventListener("change", update);
+      reduced.removeEventListener("change", update);
+    };
+  }, []);
 
-export function ImageTrail({
-  images,
-  threshold = 130,
-  lifetime = 900,
-  className,
-}: ImageTrailProps) {
-  const [items, setItems] = useState<TrailItem[]>([]);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const last = useRef<{ x: number; y: number } | null>(null);
-  const counter = useRef(0);
-  const timers = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+  return enabled;
+}
 
-  const spawn = useCallback(
-    (x: number, y: number) => {
-      const index = counter.current;
-      counter.current += 1;
-      const src = images[index % images.length];
-      if (!src) return;
-      const id = index;
-      const item: TrailItem = {
+const ImageTrail = ({
+  children,
+  containerRef,
+  newOnTop = true,
+  rotationRange = 8,
+  interval = 130,
+  threshold = 110,
+  maxItems = 8,
+  lifetime = 1000,
+}: ImageTrailProps) => {
+  const enabled = useTrailEnabled();
+  const [trail, setTrail] = useState<TrailItemData[]>([]);
+
+  const lastAddedTimeRef = useRef(0);
+  const lastMousePosRef = useRef({ x: 0, y: 0 });
+  const currentIndexRef = useRef(0);
+  const timersRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+
+  const { position: mousePosition, isInside } = useMouseVector(containerRef);
+
+  const childrenArray = useMemo(() => Children.toArray(children), [children]);
+
+  const removeFromTrail = useCallback((id: string) => {
+    setTrail((current) => current.filter((item) => item.id !== id));
+  }, []);
+
+  const addToTrail = useCallback(
+    (mousePos: { x: number; y: number }) => {
+      if (!childrenArray.length) return;
+
+      const id = uuidv4();
+      const newItem: TrailItemData = {
         id,
-        src,
-        x,
-        y,
-        width: WIDTHS[index % WIDTHS.length] ?? 170,
-        ratio: RATIOS[index % RATIOS.length] ?? 0.75,
-        rotate: ROTATIONS[index % ROTATIONS.length] ?? 0,
+        x: mousePos.x,
+        y: mousePos.y,
+        rotation: (Math.random() - 0.5) * rotationRange * 2,
+        child: childrenArray[currentIndexRef.current],
       };
-      setItems((prev) => [...prev.slice(-7), item]);
+
+      currentIndexRef.current = (currentIndexRef.current + 1) % childrenArray.length;
+
+      setTrail((current) => {
+        const next = newOnTop ? [...current, newItem] : [newItem, ...current];
+        if (next.length <= maxItems) return next;
+        return newOnTop ? next.slice(next.length - maxItems) : next.slice(0, maxItems);
+      });
+
       const timer = setTimeout(() => {
-        setItems((prev) => prev.filter((i) => i.id !== id));
-        timers.current.delete(timer);
+        removeFromTrail(id);
+        timersRef.current.delete(timer);
       }, lifetime);
-      timers.current.add(timer);
+      timersRef.current.add(timer);
     },
-    [images, lifetime],
+    [childrenArray, lifetime, maxItems, newOnTop, removeFromTrail, rotationRange],
   );
 
-  useEffect(() => {
-    const node = containerRef.current;
-    if (!node) return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  useAnimationFrame((time) => {
+    if (!enabled || !isInside) return;
 
-    const onMove = (event: PointerEvent) => {
-      if (event.pointerType !== "mouse") return;
-      const rect = node.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const prev = last.current;
-      if (prev) {
-        const distance = Math.hypot(x - prev.x, y - prev.y);
-        if (distance < threshold) return;
-      }
-      last.current = { x, y };
-      spawn(x, y);
-    };
+    const last = lastMousePosRef.current;
+    if (last.x === mousePosition.x && last.y === mousePosition.y) return;
 
-    node.addEventListener("pointermove", onMove);
-    return () => {
-      node.removeEventListener("pointermove", onMove);
-    };
-  }, [spawn, threshold]);
+    const distance = Math.hypot(mousePosition.x - last.x, mousePosition.y - last.y);
+    if (distance < threshold) return;
+    if (time - lastAddedTimeRef.current < interval) return;
+
+    lastMousePosRef.current = mousePosition;
+    lastAddedTimeRef.current = time;
+    addToTrail(mousePosition);
+  });
 
   useEffect(() => {
-    const set = timers.current;
+    const set = timersRef.current;
     return () => {
       set.forEach((t) => clearTimeout(t));
       set.clear();
     };
   }, []);
 
+  useEffect(() => {
+    if (!isInside) setTrail([]);
+  }, [isInside]);
+
   return (
-    <div ref={containerRef} className={className}>
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <AnimatePresence>
-          {items.map((item) => (
-            <motion.img
-              key={item.id}
-              src={item.src}
-              alt=""
-              aria-hidden="true"
-              draggable={false}
-              initial={{ opacity: 0, scale: 0.94, rotate: item.rotate * 0.4 }}
-              animate={{ opacity: 1, scale: 1, rotate: item.rotate }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
-              className="pointer-events-none absolute select-none object-cover"
-              style={{
-                left: item.x,
-                top: item.y,
-                width: item.width,
-                aspectRatio: String(item.ratio),
-                translate: "-50% -50%",
-              }}
-            />
-          ))}
-        </AnimatePresence>
-      </div>
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <AnimatePresence>
+        {trail.map((item) => (
+          <motion.div
+            key={item.id}
+            className="pointer-events-none absolute select-none"
+            style={{ left: item.x, top: item.y, translate: "-50% -50%" }}
+            initial={{ opacity: 0, scale: 0.94, rotate: item.rotation * 0.4 }}
+            animate={{ opacity: 1, scale: 1, rotate: item.rotation }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
+          >
+            {item.child}
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
-}
+};
+
+export { ImageTrail };
