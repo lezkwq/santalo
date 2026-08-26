@@ -427,6 +427,28 @@ function Index() {
           </div>
         </section>
 
+        {/* FACHADA */}
+        <section className="w-full border-t border-border bg-offwhite py-20 md:py-28">
+          <div className="mx-auto grid w-full max-w-[1440px] gap-10 px-5 md:grid-cols-12 md:items-end md:gap-16 md:px-10">
+            <RevealImage
+              src={photos.fachada}
+              alt="Fachada da loja Santalo em Itajaí, com letreiro no vidro e jardim frontal"
+              className="md:col-span-8 aspect-[4/3] md:aspect-[16/9]"
+              position="50% 55%"
+            />
+            <Reveal delay={0.1} className="md:col-span-4">
+              <p className="label-tech text-muted-foreground">Onde a Santalo fica</p>
+              <address className="mt-6 not-italic leading-relaxed text-foreground">
+                Av. Marcos Aurélio Seara, 135
+                <br />
+                Santa Regina
+                <br />
+                Itajaí, SC
+              </address>
+            </Reveal>
+          </div>
+        </section>
+
         {/* CTA FINAL */}
         <section id="contato" className="w-full bg-charcoal py-24 text-softwhite md:py-40">
           <div className="mx-auto w-full max-w-[1440px] px-5 md:px-10">
