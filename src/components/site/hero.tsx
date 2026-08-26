@@ -5,10 +5,12 @@ import { photos, whatsapp } from "@/lib/santalo";
 
 const trailImages: { src: string; width: number; ratio: string; position: string; alt: string }[] = [
   { src: photos.integrado, width: 250, ratio: "4 / 3", position: "60% 50%", alt: "" },
+  { src: photos.cozinhaIlha, width: 260, ratio: "4 / 3", position: "50% 60%", alt: "" },
   { src: photos.dormitorio, width: 196, ratio: "3 / 4", position: "60% 50%", alt: "" },
-  { src: photos.estar, width: 236, ratio: "5 / 4", position: "60% 50%", alt: "" },
-  { src: photos.cozinha, width: 258, ratio: "4 / 3", position: "70% 50%", alt: "" },
+  { src: photos.lavabo, width: 182, ratio: "3 / 4", position: "50% 35%", alt: "" },
+  { src: photos.salaRipado, width: 244, ratio: "5 / 4", position: "45% 55%", alt: "" },
   { src: photos.painel, width: 184, ratio: "3 / 4", position: "55% 45%", alt: "" },
+  { src: photos.jantarIntegrado, width: 236, ratio: "4 / 3", position: "55% 55%", alt: "" },
   { src: photos.detalhe, width: 220, ratio: "5 / 4", position: "55% 55%", alt: "" },
 ];
 
