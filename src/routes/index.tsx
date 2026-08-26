@@ -297,22 +297,29 @@ function Index() {
               <div className="md:col-span-5 md:pt-10">
                 <Reveal>
                   <h2 className="display-lg text-foreground">
-                    A Santalo
+                    William e Priscila
                     <br />
-                    começou fazendo.
+                    à frente da Santalo.
                   </h2>
                 </Reveal>
                 <Reveal delay={0.1}>
                   <p className="mt-8 max-w-[46ch] leading-relaxed text-muted-foreground">
-                    A história começou em 2014, com manutenção e montagem de móveis. Depois veio a
-                    fabricação própria. Hoje, a Santalo reúne projeto, produção e montagem em uma
-                    operação dedicada ao móvel sob medida.
+                    A Santalo é uma empresa familiar fundada por William e Priscila. Os dois
+                    acompanham diretamente os clientes e participam dos processos que levam cada
+                    projeto do planejamento à execução.
+                  </p>
+                </Reveal>
+                <Reveal delay={0.16}>
+                  <p className="label-tech mt-10 text-muted-foreground">
+                    <span className="block">Empresa familiar.</span>
+                    <span className="block">Produção própria.</span>
+                    <span className="block">Desde 2014.</span>
                   </p>
                 </Reveal>
               </div>
               <RevealImage
                 src={photos.casal}
-                alt="Fundadores da Santalo no escritório da empresa"
+                alt="William e Priscila, fundadores da Santalo, no escritório da empresa"
                 className="md:col-span-7 aspect-[4/5] md:aspect-[4/3]"
                 position="50% 30%"
               />
@@ -323,6 +330,7 @@ function Index() {
                 Seu bem estar é nossa inspiração.
               </p>
             </Reveal>
+
           </div>
         </section>
 
