@@ -232,6 +232,27 @@ function Index() {
               position="55% 55%"
             />
           </div>
+
+          <div className="mx-auto mt-12 grid w-full max-w-[1440px] gap-4 px-5 md:mt-20 md:grid-cols-12 md:gap-6 md:px-10">
+            <figure className="md:col-span-4 md:col-start-3">
+              <RevealImage
+                src={photos.detalhePenteadeira}
+                alt="Espelho iluminado e gaveta de joias aberta em penteadeira sob medida"
+                className="aspect-[4/3]"
+                position="50% 42%"
+              />
+              <figcaption className="label-tech mt-3 text-warmgray">Detalhe</figcaption>
+            </figure>
+            <figure className="md:col-span-3 md:col-start-8 md:pt-16">
+              <RevealImage
+                src={photos.detalheEstante}
+                alt="Estante metálica com iluminação interna e prateleiras sobre painel de mármore"
+                className="aspect-[3/4]"
+                position="50% 50%"
+              />
+              <figcaption className="label-tech mt-3 text-warmgray">Detalhe</figcaption>
+            </figure>
+          </div>
         </section>
 
         {/* PROCESSO */}
