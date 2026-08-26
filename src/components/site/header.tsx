@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { whatsapp } from "@/lib/santalo";
+import logoAsset from "@/assets/logo-santalo.png.asset.json";
 
 const links = [
   { label: "Projetos", href: "#projetos" },
@@ -27,8 +28,12 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto grid w-full max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 md:px-10 md:py-6">
-        <a href="#top" className="label-tech min-w-0 truncate text-foreground">
-          SANTALO
+        <a href="#top" className="flex items-center justify-start min-w-0">
+          <img
+            src={logoAsset.url}
+            alt="Santalo"
+            className="h-[clamp(1.25rem,2.2vw,1.6rem)] w-auto max-w-[180px] object-contain"
+          />
         </a>
 
         <nav className="hidden items-center gap-9 md:flex">
