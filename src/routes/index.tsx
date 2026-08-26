@@ -354,9 +354,9 @@ function Index() {
                 </Reveal>
                 <Reveal delay={0.1}>
                   <p className="mt-8 max-w-[46ch] leading-relaxed text-muted-foreground">
-                    A Santalo é uma empresa familiar fundada por William e Priscila. Os dois
-                    acompanham diretamente os clientes e participam dos processos que levam cada
-                    projeto do planejamento à execução.
+                    Fundadores da Santalo, William e Priscila acompanham de perto cada cliente e
+                    conduzem os processos por trás de cada projeto. Uma relação direta que continua
+                    do planejamento à entrega.
                   </p>
                 </Reveal>
                 <Reveal delay={0.16}>
